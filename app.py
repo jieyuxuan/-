@@ -8,14 +8,14 @@ from functools import wraps
 
 
 app = Flask(__name__)
-CORS(app)  # 允许跨域请求
+CORS(app)  
 
 
 # 数据库配置
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'Jyx10.25!!!',  # 替换为你的数据库密码
+    'password': 'Jyx10.25!!!',  
     'database': 'house_db',
     'cursorclass': pymysql.cursors.DictCursor,
 }
@@ -132,7 +132,7 @@ def save_house():
 def predict():
     data = request.json
 
-    # 准备特征数据（与训练时完全一致的结构）
+    # 准备特征数据
     features = {
         '建筑面积': data['area'],
         '室': data['rooms'],
@@ -435,7 +435,7 @@ def admin_delete_user(user_id):
             cursor.execute("SELECT house_id FROM predictions WHERE user_id = %s", (user_id,))
             house_ids = [row['house_id'] for row in cursor.fetchall()]
 
-            # 2. 删除用户的所有预测记录（外键约束可能已自动处理）
+            # 2. 删除用户的所有预测记录
             cursor.execute("DELETE FROM predictions WHERE user_id = %s", (user_id,))
 
             # 3. 删除关联的房屋信息
@@ -847,7 +847,6 @@ def delete_heating(heating_id):
 
 # 房价数据展示接口
 def extract_number(text):
-    """增强的数字提取，支持中文和阿拉伯数字"""
     cn_num = {
         '一': 1, '两': 2, '二': 2, '三': 3, '四': 4,
         '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10
